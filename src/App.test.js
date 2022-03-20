@@ -14,7 +14,7 @@ describe('Star Wars APP', () => {
     });
 
     render(<App />);
-    expect(window.fetch).toHaveBeenCalledTimes(1);
+    expect(window.fetch).toHaveBeenCalledTimes(2);
     expect(window.fetch).toHaveBeenCalledWith('https://swapi.dev/api/people/');
 
     for(let character of data.results) {
