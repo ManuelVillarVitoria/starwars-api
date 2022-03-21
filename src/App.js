@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import { getCharacter, getPeople } from './api/people';
+import { getCharacter, getPeople, searchCharacter } from './api/people';
 
 
 
@@ -40,12 +40,25 @@ const  App = () => {
     setTextSearch(text);
   }
 
+  const onSearchSubmit = e => {
+    if(e.key !== 'Enter') 
+    return;
+    
+    //Cleaning the inputSearch
+    inputSearch.current.value = "";
+    setDetails({});
+    searchCharacter(textSearch)
+    .then(data => setPeople(data.results))
+    .catch(handleError);
+  }
+  
 
   return (
     <>
       <input 
         ref={inputSearch} 
         onChange={onChangeTextSearch}
+        onKeyDown={onSearchSubmit}
         type="text" 
         placeholder='Busca un personaje' 
       />
