@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { getCharacter, getPeople } from './api/people';
 
 
 
 const  App = () => {
-
+  
+  const inputSearch = useRef(null);
+  const [textSearch, setTextSearch] = useState("");
   const [people, setPeople] = useState([]);
   const [errorState, setErrorState] = useState({ hasError: false});
   const [currentCharacter, setCurrentCharacter] = useState(1);
@@ -32,9 +34,22 @@ const  App = () => {
     setCurrentCharacter(id);
   };
 
+  const onChangeTextSearch = e => {
+    e.preventDefault();
+    const text = inputSearch.current.value;
+    setTextSearch(text);
+  }
+
 
   return (
     <>
+      <input 
+        ref={inputSearch} 
+        onChange={onChangeTextSearch}
+        type="text" 
+        placeholder='Busca un personaje' 
+      />
+
       <ul>
         {errorState.hasError &&  <div>{errorState.message}</div>}
 
